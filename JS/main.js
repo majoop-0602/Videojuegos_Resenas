@@ -3,31 +3,30 @@ function showForm(formId) {
     document.getElementById(formId).classList.add("active");
 }
 
-document.getElementById("frmRegistro").addEventListener("submit", function(e){
+$("#frmRegistro").submit(function(e) {
 
     e.preventDefault();
 
-    let datos = new FormData(this);
+    $.post("servicio.php?btn_registrar", $(this).serialize(), function(data){
 
-    fetch("servicio.php?btn_registrar",{
-        method:"POST",
-        body:datos
-    })
-    .then(res=>res.json())
-    .then(data=>{
+        let errorRegistro = document.getElementById("errorRegistro");
 
-        if(data.status==="ok"){
+        if(data.status === "ok"){
 
-
+            errorRegistro.innerText = "";
             document.getElementById("frmRegistro").reset();
-
-            showForm("login-form"); // volver al login
+            showForm("login-form");
 
         }
         else{
+
             errorRegistro.innerText = data.message;
+
         }
 
-    });
+    }, "json");
 
 });
+
+
+

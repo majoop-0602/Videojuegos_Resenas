@@ -34,6 +34,7 @@ if (isset($_GET["DATETIME"])) {
 // ------------------------------------------------------
 // Debajo de este comentario irá la configuración a la BD
 // y las funciones del servicio para la aplicación móvil.
+
 session_start(); // Iniciar sesión para manejar autenticación y otras funcionalidades relacionadas con el usuario.
 
 require "conexion.php";
@@ -52,28 +53,29 @@ if (isset($_GET["btn_registrar"])) { //Para el registro desde la pagina de login
   $email = $_POST["txt_email_registro"];
   $contrasena = $_POST["txt_contrasena_registro"];
 
-  $checkNombre = $con->select("usuarios", "nombre")
-                   ->where("nombre","=",$nombre)
-                   ->execute();
+  $query = $con->select("usuarios","nombre");
+  $query->where("nombre","=",$nombre);
+  $result = $query->execute();
 
-  $checkEmail = $con->select("usuarios", "email")
-                    ->where("email","=",$email)
-                    ->execute();
+  $query = $con->select("usuarios", "email");
+  $query->where("email","=",$email);
+  $checkEmail = $query->execute();
+
   if (!empty($checkNombre)) {
-    echo json_encode(["status" =>"error", "message" => "¡El nombre de usuario ya existe!"]);
+    echo json_encode(["status" => "error","mensaje" => "¡El nombre de usuario ya existe!"]);
     exit;
   }else if (!empty($checkEmail)) {
-    echo json_encode(["status" =>"error", "message" => "¡Ya hay una cuenta con este correo!"]);
+    echo json_encode(["status" =>"error","mensaje" => "¡Ya hay una cuenta con este correo!"]);
     exit;
   } else {
-    $con->insert("usuarios", [
-      "nombre" => $nombre,
-      "contrasena" => $contrasena,
-      "email" => $email,
-      "id_tipousuario" => 2
-    ])->execute();
+    $insert = $con->insert("usuarios","nombre, contrasena, email, id_tipousuario");
+    $insert->value($nombre);
+    $insert->value($contrasena);
+    $insert->value($email);
+    $insert->value(2); // id_tipousuario 2 para usuarios regulares
+    $insert->execute();
     header("Content-Type: application/json");
-    echo json_encode(["status" => "ok"]);
+    echo json_encode(["status" => "ok", "mensaje" => "¡Registro exitoso!"]);
     exit;
   }
     
