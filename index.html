@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="CSS/style.css" rel="stylesheet"/>
+    
+    <title>Login</title>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box active" id="login-form" name="login-form">
+            <form id="frmLogin" method="POST">
+                <h2>Inicio de Sesión</h2>
+                <p id="errorLogin" class="error-message"></p>
+                <input type="text" name="txt_usuario" id="txt_usuario" placeholder="Usuario" required>
+                <input type="password" name="txt_contrasena" id="txt_contrasena" placeholder="Contraseña" required>
+                <button type="submit" name="btn_login" id="btn_login">Iniciar Sesión</button>
+                <p>¿No tienes una cuenta? <a href="#" onclick="showForm('registro-form')" >Regístrate aquí</a></p>
+                <p>Continuar como <a href="">invitado</a></p>
+            </form>
+        </div>
+
+        <div class="form-box" id="registro-form" name="registro-form" >
+            <form id="frmRegistro"  method="POST">
+                <h2>Registro</h2>
+                <p id="errorRegistro" class="error-message"></p>
+                <input type="text" name="txt_usuario_registro" id="txt_usuario_registro" placeholder="Usuario" required>
+                <input type="email" name="txt_email_registro" id="txt_email_registro" placeholder="Email" required>
+                <input type="password" name="txt_contrasena_registro" id="txt_contrasena_registro" placeholder="Contraseña" required>
+                <button type="submit" name="btn_registrar" id="btn_registrar">Registrar</button>
+                <p>¿Ya tienes una cuenta? <a href="#" onclick="showForm('login-form')">Inicia sesión aquí</a></p>
+            </form>
+        </div>
+
+    </div>
+    <script src="JS/main.js"></script>
+</body>
+
+</html>
